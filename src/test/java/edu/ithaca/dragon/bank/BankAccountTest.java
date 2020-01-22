@@ -19,6 +19,9 @@ class BankAccountTest {
         bankAccount.withdraw(100);
 
         assertEquals(100, bankAccount.getBalance());
+        //check for exception thrown correctly
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(-100));
+        assertThrows(InsufficientFundsException.class, ()-> bankAccount.withdraw(300));
     }
 
     @Test
