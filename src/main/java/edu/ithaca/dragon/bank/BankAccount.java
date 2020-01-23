@@ -1,5 +1,7 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
+
 public class BankAccount {
 
     private String email;
@@ -38,7 +40,11 @@ public class BankAccount {
 
 
     public static boolean isEmailValid(String email){
+        String[] illegalCharacters= new String[]{"(", ")", "<", ">", ",", ";", ":", "..", "[", "]", "{", "}"};
         if (email.indexOf('@') == -1){
+            return false;
+        }
+        if (!email.endsWith(".com")){
             return false;
         }
         else {
