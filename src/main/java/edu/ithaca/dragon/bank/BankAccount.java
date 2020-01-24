@@ -40,14 +40,16 @@ public class BankAccount {
 
 
     public static boolean isEmailValid(String email){
-        String[] illegalCharacters= new String[]{"(", ")", "<", ">", ",", ";", ":", "..", "[", "]", "{", "}"};
         if (email.indexOf('@') == -1){
             return false;
         }
         if (!email.endsWith(".com")){
             return false;
         }
-        else {
+        if(email.substring(0,email.indexOf('@')).contains(".")){//should be changed to incorporate more illegal characters
+            return false;
+        }
+        else{
             return true;
         }
     }
