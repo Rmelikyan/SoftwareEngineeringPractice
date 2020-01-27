@@ -9,12 +9,20 @@ class BankAccountTest {
     @Test
     void getBalanceTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
+        assertEquals(200, bankAccount.getBalance()); //Equivalence case
 
-        assertEquals(200, bankAccount.getBalance());
+        BankAccount bankAccount2 = new BankAccount("a@b.com", 1e-16);
+        assertEquals(1e-16, bankAccount2.getBalance()); //Border case
+
+        BankAccount bankAccount3 = new BankAccount("a@b.com", 0);
+        assertEquals(0, bankAccount3.getBalance()); //Border case
+
+        BankAccount bankAccount4 = new BankAccount("a@b.com", -1);
+        assertEquals(-1, bankAccount4.getBalance()); //Border case //ToDo this shouldn't work
     }
 
     @Test
-    void withdrawTest() {
+    void withdrawTest() throws InsufficientFundsException {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 
         bankAccount.withdraw(0);
@@ -47,6 +55,9 @@ class BankAccountTest {
         assertFalse(BankAccount.isEmailValid( "a.dnay@b")); //Equivalence domain error
         assertFalse(BankAccount.isEmailValid( ".nay@b.com")); //Border leading '.'
         assertFalse(BankAccount.isEmailValid( "...groovy@b.com")); //equivalence multi leading '.'
+        assertFalse(BankAccount.isEmailValid( "a-@b.com")); //border case of '-' directly before '@'
+        assertFalse(BankAccount.isEmailValid( "a.@b.com")); //border case of '.' directly before '@'
+        assertFalse(BankAccount.isEmailValid( "a_@b.com")); //border case of '_' directly before '@'
 
 
     }
