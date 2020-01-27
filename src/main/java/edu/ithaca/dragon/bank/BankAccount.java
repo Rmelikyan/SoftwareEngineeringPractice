@@ -56,25 +56,25 @@ public class BankAccount {
         String firstHalfEmail=email.substring(0, email.indexOf('@'));
 
         for (int i = 0; i < illegals.size(); i++) {
-            if(i==0){
-                if(firstHalfEmail.charAt(0)=='.')
+            if (i == 0) {
+                if (firstHalfEmail.charAt(0) == '.')
                     return false;
-                else if(firstHalfEmail.charAt(firstHalfEmail.length()-1)=='_')
+                else if (firstHalfEmail.charAt(firstHalfEmail.length() - 1) == '_')
                     return false;
-                else if(firstHalfEmail.charAt(firstHalfEmail.length()-1)=='-')
+                else if (firstHalfEmail.charAt(firstHalfEmail.length() - 1) == '-')
                     return false;
-            }
-            else if(i== illegals.size()-1){
-                if(firstHalfEmail.charAt(firstHalfEmail.length()-1)=='.')
+            } else if (i == illegals.size() - 1) {
+                if (firstHalfEmail.charAt(firstHalfEmail.length() - 1) == '.')
                     return false;
-                else if(firstHalfEmail.charAt(firstHalfEmail.length()-1)=='_')
+                else if (firstHalfEmail.charAt(firstHalfEmail.length() - 1) == '_')
                     return false;
-                else if(firstHalfEmail.charAt(firstHalfEmail.length()-1)=='-')
+                else if (firstHalfEmail.charAt(firstHalfEmail.length() - 1) == '-')
                     return false;
             }
             if (firstHalfEmail.contains(illegals.get(i)))
                 return false;
         }
+
 
         if (!email.endsWith(".com"))
             return false;
