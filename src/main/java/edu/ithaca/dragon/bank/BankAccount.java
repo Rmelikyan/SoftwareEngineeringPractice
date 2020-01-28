@@ -33,11 +33,11 @@ public class BankAccount {
      * @post reduces the balance by amount if amount is non-negative and smaller than balance
      */
     public void withdraw(double amount) throws InsufficientFundsException {
-        if(amount>balance){
-            throw new InsufficientFundsException("Not enough funds");
-        }
         if(amount<0){
-            throw new IllegalArgumentException("Invalid amount");
+            throw new IllegalArgumentException("Amount cannot be negative");
+        }
+        if(amount>balance){
+            throw new InsufficientFundsException("Cannot withdraw more than available in account");
         }
         balance -= amount;
 
@@ -45,41 +45,44 @@ public class BankAccount {
 
 
     public static boolean isEmailValid(String email) {
-        if (email.indexOf('@') == -1)
+        if (email.indexOf('@') == -1){ //Checks for '@'
             return false;
-
-        ArrayList<String> illegals = new ArrayList<>();
-        illegals.add("#");
-        illegals.add("..");
-
-
-        String firstHalfEmail=email.substring(0, email.indexOf('@'));
-
-        for (int i = 0; i < illegals.size(); i++) {
-            if (i == 0) {
-                if (firstHalfEmail.charAt(0) == '.')
-                    return false;
-                else if (firstHalfEmail.charAt(firstHalfEmail.length() - 1) == '_')
-                    return false;
-                else if (firstHalfEmail.charAt(firstHalfEmail.length() - 1) == '-')
-                    return false;
-            } else if (i == illegals.size() - 1) {
-                if (firstHalfEmail.charAt(firstHalfEmail.length() - 1) == '.')
-                    return false;
-                else if (firstHalfEmail.charAt(firstHalfEmail.length() - 1) == '_')
-                    return false;
-                else if (firstHalfEmail.charAt(firstHalfEmail.length() - 1) == '-')
-                    return false;
-            }
-            if (firstHalfEmail.contains(illegals.get(i)))
-                return false;
         }
-
-
-        if (!email.endsWith(".com"))
+        if (email.indexOf('.') == 0 || email.indexOf('.') == -1){ //checks for '.' but not at beginning
             return false;
-        else
+        }
+        if (email.indexOf('#') != -1){ //Checks for an illegal character
+            return false;
+        }
+        for (int i=0; i<email.length(); i++){ //checks entire email for any occurrence of '..' which is illegal
+            if(email.charAt(i) == '.'){
+                if(email.charAt(i+1) == '.'){
+                    return false;
+                }
+            }
+        }
+        String[] split = email.split("@");
+        if (split.length > 2){
+            return false;
+        }
+        String prefix  = split[0];
+        if (prefix.charAt(prefix.length()-1) == '.'||prefix.charAt(prefix.length()-1) == '-'||prefix.charAt(prefix.length()-1) == '_'){ //checks that '.', '-', or '_' are not at end of prefix
+            return false;
+        }
+        String backHalf = split[1];
+        String[] newSplit = backHalf.split("\\.", 0);
+        if (newSplit.length > 2){
+            return false;
+        }
+        if (newSplit[0].length() < 1){
+            return false;
+        }
+        if (split[1].length() < 2){
+            return false;
+        }
+        else {
             return true;
         }
     }
+}
 
