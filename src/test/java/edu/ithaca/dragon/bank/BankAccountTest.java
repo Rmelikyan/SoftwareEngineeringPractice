@@ -83,6 +83,7 @@ class BankAccountTest {
         assertEquals(false, BankAccount.isAmountValid(-.001)); //Border negative and invalid decimal
         assertEquals(false, BankAccount.isAmountValid(-.01)); //Border negative amount
         assertEquals(false, BankAccount.isAmountValid(-100)); //Equivalence negative
+        assertEquals(false, BankAccount.isAmountValid(1e-16)); //Border verrry small number
 
     }
 

@@ -9,7 +9,11 @@ public class BankAccount {
     public static String legals = "1234567890qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM.-_@";
 
     public static boolean isAmountValid(double amount){
-        return false;
+        double checker = amount * 1000;
+        if (checker % 10 > 0 || amount < 0){
+            return false;
+        }
+        else return true;
     }
 
     /**
