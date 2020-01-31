@@ -8,7 +8,7 @@ public class BankAccount {
     private double balance;
     public static String legals = "1234567890qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM.-_@";
 
-    private static boolean isAmountValid(int amount){
+    public static boolean isAmountValid(double amount){
         return false;
     }
 
@@ -58,7 +58,6 @@ public class BankAccount {
         }
         for (int i=0; i<email.length(); i++){ //Checks for an illegal character
             if(legals.indexOf(email.charAt(i)) == -1){
-                System.out.println("Illegal Character: " + email.charAt(i));
                 return false;
             }
         }

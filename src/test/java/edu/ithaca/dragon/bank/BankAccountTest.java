@@ -72,4 +72,19 @@ class BankAccountTest {
         assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
     }
 
+    @Test
+    void isAmountValidTest() {
+
+        assertEquals(true, BankAccount.isAmountValid(0)); //Border zero case
+        assertEquals(true, BankAccount.isAmountValid(.01)); //Border minimum valid amount
+        assertEquals(true, BankAccount.isAmountValid(1)); //Equivalence valid amount
+        assertEquals(false, BankAccount.isAmountValid(.001)); //Border invalid amount
+        assertEquals(false, BankAccount.isAmountValid(100.001)); //Equivalence invalid decimal amount
+        assertEquals(false, BankAccount.isAmountValid(-.001)); //Border negative and invalid decimal
+        assertEquals(false, BankAccount.isAmountValid(-.01)); //Border negative amount
+        assertEquals(false, BankAccount.isAmountValid(-100)); //Equivalence negative
+
+    }
+
+
 }
