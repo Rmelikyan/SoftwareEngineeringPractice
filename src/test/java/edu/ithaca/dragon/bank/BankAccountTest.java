@@ -11,14 +11,8 @@ class BankAccountTest {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
         assertEquals(200, bankAccount.getBalance()); //Equivalence case
 
-        BankAccount bankAccount2 = new BankAccount("a@b.com", 1e-16);
-        assertEquals(1e-16, bankAccount2.getBalance()); //Border case
-
         BankAccount bankAccount3 = new BankAccount("a@b.com", 0);
         assertEquals(0, bankAccount3.getBalance()); //Border case
-
-        BankAccount bankAccount4 = new BankAccount("a@b.com", -1);
-        assertEquals(-1, bankAccount4.getBalance()); //Border case //ToDo this shouldn't work
     }
 
     @Test
