@@ -8,6 +8,10 @@ public class BankAccount {
     private double balance;
     public static String legals = "1234567890qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM.-_@";
 
+    private static boolean isAmountValid(int amount){
+        return false;
+    }
+
     /**
      * @throws IllegalArgumentException if email is invalid
      */
