@@ -6,6 +6,7 @@ public class BankAccount {
 
     private String email;
     private double balance;
+    public static String legals = "1234567890qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM.-_@";
 
     /**
      * @throws IllegalArgumentException if email is invalid
@@ -51,12 +52,15 @@ public class BankAccount {
         if (email.indexOf('.') == 0 || email.indexOf('.') == -1){ //checks for '.' but not at beginning
             return false;
         }
-        if (email.indexOf('#') != -1){ //Checks for an illegal character
-            return false;
+        for (int i=0; i<email.length(); i++){ //Checks for an illegal character
+            if(legals.indexOf(email.charAt(i)) == -1){
+                System.out.println("Illegal Character: " + email.charAt(i));
+                return false;
+            }
         }
         for (int i=0; i<email.length(); i++){ //checks entire email for any occurrence of '..' which is illegal
-            if(email.charAt(i) == '.'){
-                if(email.charAt(i+1) == '.'){
+            if(email.charAt(i) == '.' || email.charAt(i) == '_' || email.charAt(i) == '-'){
+                if(email.charAt(i+1) == '.' || email.charAt(i) == '_' || email.charAt(i) == '-'){
                     return false;
                 }
             }
@@ -66,15 +70,20 @@ public class BankAccount {
             return false;
         }
         String prefix  = split[0];
-        if (prefix.charAt(prefix.length()-1) == '.'||prefix.charAt(prefix.length()-1) == '-'||prefix.charAt(prefix.length()-1) == '_'){ //checks that '.', '-', or '_' are not at end of prefix
+        if ((prefix.charAt(prefix.length() - 1) == '.')
+                || (prefix.charAt(prefix.length() - 1) == '-')
+                || (prefix.charAt(prefix.length() - 1) == '_')){ //checks that '.', '-', or '_' are not at end of prefix
             return false;
         }
         String backHalf = split[1];
         String[] newSplit = backHalf.split("\\.", 0);
-        if (newSplit.length > 2){
+        if (newSplit.length != 2){
             return false;
         }
         if (newSplit[0].length() < 1){
+            return false;
+        }
+        if (newSplit[1].length() < 2){
             return false;
         }
         if (split[1].length() < 2){
