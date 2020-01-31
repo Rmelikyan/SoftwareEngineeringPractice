@@ -37,6 +37,25 @@ class BankAccountTest {
     }
 
     @Test
+    void depositTest(){
+        BankAccount bankAccount = new BankAccount("a@b.com", 200);
+
+        bankAccount.deposit(0); //Border zero deposited
+        assertEquals(200,bankAccount.getBalance());
+
+        bankAccount.deposit(.01); //Border minimum positive amount to deposit
+        assertEquals(200.01,bankAccount.getBalance());
+
+        bankAccount.deposit(.99); //Equivalence amount to deposit
+        assertEquals(201,bankAccount.getBalance());
+
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(.001)); //Border sub cent
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-.01)); //Border negative
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(1e-16)); //Equivalence Sub cent
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.deposit(-100)); // Equivalence negative
+    }
+
+    @Test
     void isEmailValidTest(){
         assertTrue(BankAccount.isEmailValid( "a@b.com")); //Main Equivalence Test
         assertFalse( BankAccount.isEmailValid("")); //Border case of no @
@@ -72,15 +91,15 @@ class BankAccountTest {
     @Test
     void isAmountValidTest(){
 
-        assertEquals(true, BankAccount.isAmountValid(0)); //Border zero case
-        assertEquals(true, BankAccount.isAmountValid(.01)); //Border minimum valid amount
-        assertEquals(true, BankAccount.isAmountValid(1)); //Equivalence valid amount
-        assertEquals(false, BankAccount.isAmountValid(.001)); //Border invalid amount
-        assertEquals(false, BankAccount.isAmountValid(100.001)); //Equivalence invalid decimal amount
-        assertEquals(false, BankAccount.isAmountValid(-.001)); //Border negative and invalid decimal
-        assertEquals(false, BankAccount.isAmountValid(-.01)); //Border negative amount
-        assertEquals(false, BankAccount.isAmountValid(-100)); //Equivalence negative
-        assertEquals(false, BankAccount.isAmountValid(1e-16)); //Border verrry small number
+        assertTrue(BankAccount.isAmountValid(0)); //Border zero case
+        assertTrue(BankAccount.isAmountValid(.01)); //Border minimum valid amount
+        assertTrue(BankAccount.isAmountValid(1)); //Equivalence valid amount
+        assertFalse(BankAccount.isAmountValid(.001)); //Border invalid amount
+        assertFalse(BankAccount.isAmountValid(100.001)); //Equivalence invalid decimal amount
+        assertFalse(BankAccount.isAmountValid(-.001)); //Border negative and invalid decimal
+        assertFalse(BankAccount.isAmountValid(-.01)); //Border negative amount
+        assertFalse(BankAccount.isAmountValid(-100)); //Equivalence negative
+        assertFalse(BankAccount.isAmountValid(1e-16)); //Border verrry small number
 
     }
 
