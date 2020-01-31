@@ -77,7 +77,7 @@ class BankAccountTest {
     }
 
     @Test
-    void transferTest(){
+    void transferTest() throws InsufficientFundsException{
         BankAccount b1 = new BankAccount("a@b.com", 200);
         BankAccount b2 = new BankAccount("c@d.com", 200);
 
@@ -97,7 +97,7 @@ class BankAccountTest {
         assertEquals(200, b1.getBalance());
         assertEquals(200, b2.getBalance());
 
-        assertThrows(InsufficientFundsException.class, ()-> b1.transfer(b2, 300)); //border over transfer
+        assertThrows(InsufficientFundsException.class, ()-> b1.transfer(b2, 300)); //border over withdrawal in transfer
         assertEquals(200, b1.getBalance());
         assertEquals(200, b2.getBalance());
 

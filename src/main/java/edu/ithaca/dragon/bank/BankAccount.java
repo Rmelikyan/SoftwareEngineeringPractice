@@ -75,7 +75,6 @@ public class BankAccount {
         }
         else throw new IllegalArgumentException("The amount you wish to deposit is illegal \n" +
                 "Amount must be 0, positive, and of dollar divisions of cent or greater");
-        return;
     }
 
     /**
@@ -84,8 +83,15 @@ public class BankAccount {
      * @param amount Amount to be transferred
      * @post Balances of local and other account will be updated
      */
-    public void transfer(BankAccount sendTo, double amount){
-        return;
+    public void transfer(BankAccount sendTo, double amount) throws IllegalArgumentException, InsufficientFundsException{
+        if (sendTo == this){
+            throw new IllegalArgumentException("Can't transfer to same account");
+        }
+        if(!isAmountValid(amount)){
+            throw new IllegalArgumentException("Amount must be valid");
+        }
+        withdraw(amount);
+        sendTo.deposit(amount);
     }
 
 
