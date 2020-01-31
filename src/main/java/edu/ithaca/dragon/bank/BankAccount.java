@@ -55,7 +55,7 @@ public class BankAccount {
      */
     public void withdraw(double amount) throws InsufficientFundsException {
         if(!isAmountValid(amount)){
-            throw new IllegalArgumentException("Amount cannot be negative");
+            throw new IllegalArgumentException("Amount cannot be negative or contain divisions of the dollar finer than .01");
         }
         if(amount>balance){
             throw new InsufficientFundsException("Cannot withdraw more than available in account");
@@ -70,6 +70,11 @@ public class BankAccount {
      * @throws IllegalArgumentException if amount doesn't pass validity test as defined above
      */
     public void deposit(double amount) throws IllegalArgumentException{
+        if (isAmountValid(amount)){
+            balance += amount;
+        }
+        else throw new IllegalArgumentException("The amount you wish to deposit is illegal \n" +
+                "Amount must be 0, positive, and of dollar divisions of cent or greater");
         return;
     }
 
