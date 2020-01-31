@@ -77,6 +77,36 @@ class BankAccountTest {
     }
 
     @Test
+    void transferTest(){
+        BankAccount b1 = new BankAccount("a@b.com", 200);
+        BankAccount b2 = new BankAccount("c@d.com", 200);
+
+        b1.transfer(b2, 100); //Border case of transfer from 1 to 2
+        assertEquals(100, b1.getBalance());
+        assertEquals(300, b2.getBalance());
+
+        b2.transfer(b1, 100); //Equivalence of 2 to 1
+        assertEquals(200, b1.getBalance());
+        assertEquals(200, b2.getBalance());
+
+        assertThrows(IllegalArgumentException.class, ()-> b1.transfer(b2, .001)); //border invalid amount
+        assertEquals(200, b1.getBalance());
+        assertEquals(200, b2.getBalance());
+
+        assertThrows(IllegalArgumentException.class, ()-> b1.transfer(b2, -.01)); //border invalid amount
+        assertEquals(200, b1.getBalance());
+        assertEquals(200, b2.getBalance());
+
+        assertThrows(InsufficientFundsException.class, ()-> b1.transfer(b2, 300)); //border over transfer
+        assertEquals(200, b1.getBalance());
+        assertEquals(200, b2.getBalance());
+
+        assertThrows(IllegalArgumentException.class, ()-> b1.transfer(b1, 100)); //border self transfer illegal
+        assertEquals(200, b1.getBalance());
+        assertEquals(200, b2.getBalance());
+    }
+
+    @Test
     void constructorTest() {
         BankAccount bankAccount = new BankAccount("a@b.com", 200);
 

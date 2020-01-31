@@ -80,12 +80,11 @@ public class BankAccount {
 
     /**
      * transfers amount from one account to another
-     * @param takeFrom Account to take amount from
      * @param sendTo Account to send amount to
      * @param amount Amount to be transferred
-     * @post Balances of both acounts will be updated
+     * @post Balances of local and other account will be updated
      */
-    public void transfer(BankAccount takeFrom, BankAccount sendTo, double amount){
+    public void transfer(BankAccount sendTo, double amount){
         return;
     }
 
