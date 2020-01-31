@@ -31,14 +31,15 @@ class BankAccountTest {
         bankAccount.withdraw(100);
         assertEquals(100, bankAccount.getBalance()); //Equivalence standard withdrawal
 
-        bankAccount.withdraw(1e-16);
-        assertEquals(100-1e-16, bankAccount.getBalance()); //border standard withdrawal
 
         //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(-1e-16)); // Border neg withdrawal
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(-1e-16)); // Border neg withdrawal and sub cent amount
         assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(-100)); // Equivalence neg withdrawal
-        assertThrows(InsufficientFundsException.class, ()-> bankAccount.withdraw(200+1e-16)); //Border over withdrawal
+        assertThrows(InsufficientFundsException.class, ()-> bankAccount.withdraw(201)); //Border over withdrawal
         assertThrows(InsufficientFundsException.class, ()-> bankAccount.withdraw(300)); //Equivalence over withdrawal
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(1e-16)); // Border sub cent amount
+        assertThrows(IllegalArgumentException.class, ()-> bankAccount.withdraw(.001)); // Equivalence sub cent amount
+
     }
 
     @Test
@@ -69,11 +70,13 @@ class BankAccountTest {
         assertEquals("a@b.com", bankAccount.getEmail());
         assertEquals(200, bankAccount.getBalance());
         //check for exception thrown correctly
-        assertThrows(IllegalArgumentException.class, ()-> new BankAccount("", 100));
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("", 100)); //Border invalid email
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", -.01)); //Border negative amount
+        assertThrows(IllegalArgumentException.class, () -> new BankAccount("a@b.com", .001)); //Border less than cent amount
     }
 
     @Test
-    void isAmountValidTest() {
+    void isAmountValidTest(){
 
         assertEquals(true, BankAccount.isAmountValid(0)); //Border zero case
         assertEquals(true, BankAccount.isAmountValid(.01)); //Border minimum valid amount
