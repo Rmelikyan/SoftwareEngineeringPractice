@@ -8,6 +8,12 @@ public class BankAccount {
     private double balance;
     public static String legals = "1234567890qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM.-_@";
 
+    /**
+     * @param amount amount to be checked
+     * @return false if amount is invalid
+     * @return true if amount is valid
+     * valid is defined as 0 or >= than 1 cent
+     */
     public static boolean isAmountValid(double amount){
         double checker = amount * 1000;
         if (checker % 10 > 0 || amount < 0){
@@ -17,6 +23,8 @@ public class BankAccount {
     }
 
     /**
+     * @param  email input email
+     * @param startingBalance input balance
      * @throws IllegalArgumentException if email is invalid
      */
     public BankAccount(String email, double startingBalance) {
@@ -54,6 +62,15 @@ public class BankAccount {
         }
         balance -= amount;
 
+    }
+
+    /**
+     * @param amount
+     * @post update balance to reflect deposited amount
+     * @throws IllegalArgumentException if amount doesn't pass validity test as defined above
+     */
+    public void deposit(double amount) throws IllegalArgumentException{
+        return;
     }
 
 
